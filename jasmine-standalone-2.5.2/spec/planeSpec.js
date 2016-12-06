@@ -21,4 +21,9 @@ describe('plane', function() {
     expect('land' in plane).toEqual(true);
   });
 
+  it('can take off from  an airport', function(){
+    plane.takeOff(airport);
+    expect(airport._hangar).to notContain(plane);
+  });
+
 });
