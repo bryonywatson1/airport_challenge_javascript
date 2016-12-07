@@ -14,7 +14,7 @@
    describe('when weather is not stormy', function() {
 
      beforeEach(function() {
-      weather.isStormy.and.returnValue(false);
+      spyOn(airport, 'checkWeather').and.returnValue(false);
      });
 
      it('landing bay will be empty by default', function() {
@@ -36,7 +36,7 @@
     describe('when weather is stormy', function() {
 
     beforeEach(function() {
-      weather.isStormy.and.returnValue(true);
+      spyOn(airport, 'checkWeather').and.returnValue(true);
       airport.clearForLanding(plane);
     });
 

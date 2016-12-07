@@ -8,7 +8,7 @@ describe('Feature Test', function() {
   beforeEach(function() {
     plane = new Plane();
     airport = new Airport();
-    weather = new Weather();
+    weather = jasmine.createSpyObj('weather', ['isStormy']);
   });
 
   it('planes can be instructed to land at an airport', function() {
@@ -24,7 +24,7 @@ describe('Feature Test', function() {
 
   it('airport prevents take off if weather is stormy', function () {
     plane.land(airport);
-    weather.isStormy.and.returnValue(true);
+    spyOn(weather, 'isStormy').and.returnValue(true);
     expect(airport.clearForTakeoff(plane)).toThrow('Plane cannot take off in stormy weather');
   });
 });
