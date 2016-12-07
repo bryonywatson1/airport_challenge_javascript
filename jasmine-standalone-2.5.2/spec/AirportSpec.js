@@ -3,11 +3,19 @@
  describe('Airport', function() {
    var airport;
    var plane;
+   var weather;
 
    beforeEach(function() {
      airport = new Airport();
      plane = jasmine.createSpyObj('plane', ['land', 'takeOff']);
+     weather = jasmine.createSpyObj('weather', ['isStormy']);
    });
+
+   describe('when weather is not stormy', function() {
+
+     beforeEach(function() {
+      weather.isStormy.and.returnValue(false);
+     });
 
      it('landing bay will be empty by default', function() {
        expect(airport.planes()).toEqual([]);
@@ -23,4 +31,17 @@
        airport.clearForTakeoff(plane);
        expect(airport.planes()).not.toContain([plane]);
      });
+   });
+
+    describe('when weather is stormy', function() {
+
+    beforeEach(function() {
+      weather.isStormy.and.returnValue(true);
+      airport.clearForLanding(plane);
+    });
+
+     it('not not allow a plane to take off', function() {
+       expect(function(){ airport.clearForTakeoff(plane); }).toThrowError('Plane cannot take off in stormy weather')
+     });
+   });
  });
